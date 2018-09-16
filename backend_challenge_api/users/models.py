@@ -3,7 +3,7 @@ from django.db.models import CharField, BooleanField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from app_tasks.models import QuestionOpen, QuestionYesOrNo, QuestionMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
 
 
 class User(AbstractUser):
@@ -25,14 +25,14 @@ class User(AbstractUser):
 
   # COMMENT OUT AT NEW DEPLOY
   def save(self, *args, **kwargs):
-    # If Question doesn't already exist create an (empty) UserAnswer entry for each User in the database upfront.
+    # If Task doesn't already exist create an (empty) UserAnswer entry for each User in the database upfront.
     if self.pk is None:
 
       super(User, self).save(*args, **kwargs)
       
-      open_questions = QuestionOpen.objects.all()
-      multiple_choice_questions = QuestionMultiple.objects.all()
-      yes_or_no_questions = QuestionYesOrNo.objects.all()
+      open_questions = TaskOpen.objects.all()
+      multiple_choice_questions = TaskMultiple.objects.all()
+      yes_or_no_questions = TaskYesOrNo.objects.all()
 
       useranswer_list = []
  

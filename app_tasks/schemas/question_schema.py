@@ -3,38 +3,38 @@ from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from itertools import chain
 
-from ..models import Question, QuestionMultiple, QuestionOpen, QuestionYesOrNo
+from ..models import Task, TaskMultiple, TaskOpen, TaskYesOrNo
 
-class BaseQuestion(graphene.Interface):
+class BaseTask(graphene.Interface):
   id = graphene.Int()
   order = graphene.Int()
   question_text = graphene.String()
 
 
-class QuestionMultipleType(DjangoObjectType):
+class TaskMultipleType(DjangoObjectType):
   options = graphene.String()
   class Meta:
-    model = QuestionMultiple
-    interfaces = [ BaseQuestion ]
+    model = TaskMultiple
+    interfaces = [ BaseTask ]
 
-class QuestionOpenType(DjangoObjectType):
+class TaskOpenType(DjangoObjectType):
   class Meta:
-    model = QuestionOpen
-    interfaces = [ BaseQuestion ]
+    model = TaskOpen
+    interfaces = [ BaseTask ]
 
-class QuestionYesOrNoType(DjangoObjectType):
+class TaskYesOrNoType(DjangoObjectType):
   class Meta:
-    model = QuestionYesOrNo
-    interfaces = [ BaseQuestion ]
+    model = TaskYesOrNo
+    interfaces = [ BaseTask ]
 
 class AllQuesetions(graphene.ObjectType):
-  all_questions = graphene.List(BaseQuestion)
+  all_questions = graphene.List(BaseTask)
 
   def resolve_all_questions(self, info, **kwargs):
 
-    multi_questions = QuestionMultiple.objects.all()
-    yes_no_questions = QuestionYesOrNo.objects.all()
-    open_questions = QuestionOpen.objects.all()
+    multi_questions = TaskMultiple.objects.all()
+    yes_no_questions = TaskYesOrNo.objects.all()
+    open_questions = TaskOpen.objects.all()
 
     all_questions = sorted(
       chain(

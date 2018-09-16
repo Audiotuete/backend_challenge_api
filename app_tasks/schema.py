@@ -3,7 +3,7 @@ import graphql_jwt
 
 
 from .schemas.question_schema import AllQuesetions
-from .schemas.question_schema import QuestionMultipleType, QuestionOpenType, QuestionYesOrNoType
+from .schemas.question_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
 
 
 from .schemas.user_schema import Query as UserQuery
@@ -31,4 +31,4 @@ class Mutation(
   verify_token = graphql_jwt.Verify.Field()
   refresh_token = graphql_jwt.Refresh.Field()
 
-schema = graphene.Schema(query=Query, types=[QuestionMultipleType, QuestionOpenType, QuestionYesOrNoType, ], mutation=Mutation)
+schema = graphene.Schema(query=Query, types=[TaskMultipleType, TaskOpenType, TaskYesOrNoType, ], mutation=Mutation)

@@ -1,6 +1,6 @@
 from django.db import models
 
-from app_tasks.models import QuestionOpen, QuestionYesOrNo, QuestionMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
 
 
 class Project(models.Model):
@@ -19,14 +19,14 @@ class Project(models.Model):
 
   # COMMENT OUT AT NEW DEPLOY
   def save(self, *args, **kwargs):
-    # If Question doesn't already exist create an (empty) UserAnswer entry for each Project in the database upfront.
+    # If Task doesn't already exist create an (empty) UserAnswer entry for each Project in the database upfront.
     if self.pk is None:
 
       super(Project, self).save(*args, **kwargs)
       
-      open_tasks = QuestionOpen.objects.all()
-      multiple_choice_tasks = QuestionMultiple.objects.all()
-      yes_or_no_tasks = QuestionYesOrNo.objects.all()
+      open_tasks = TaskOpen.objects.all()
+      multiple_choice_tasks = TaskMultiple.objects.all()
+      yes_or_no_tasks = TaskYesOrNo.objects.all()
 
       project_task_list = []
  

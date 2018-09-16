@@ -1,10 +1,10 @@
 from django.contrib import admin
 from ordered_model.admin import OrderedModelAdmin
 
-from .models import QuestionOpen, QuestionYesOrNo, QuestionMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple, Question
+from .models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple, Task
 
-class QuestionAdmin(OrderedModelAdmin):
-  model = Question
+class TaskAdmin(OrderedModelAdmin):
+  model = Task
   list_display = ('task_text', 'move_up_down_links')
 
   def has_add_permission(self, request):
@@ -53,10 +53,10 @@ class UserAnswerMultipleAdmin(admin.ModelAdmin):
     return False
 
 
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(QuestionOpen)
-admin.site.register(QuestionYesOrNo)
-admin.site.register(QuestionMultiple)
+admin.site.register(Task, TaskAdmin)
+admin.site.register(TaskOpen)
+admin.site.register(TaskYesOrNo)
+admin.site.register(TaskMultiple)
 admin.site.register(UserAnswerOpen, UserAnswerOpenAdmin)
 admin.site.register(UserAnswerYesOrNo, UserAnswerYesOrNoAdmin)
 admin.site.register(UserAnswerMultiple, UserAnswerMultipleAdmin)

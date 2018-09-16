@@ -7,14 +7,14 @@ from django.contrib.postgres.fields import ArrayField
 from ordered_model.models import OrderedModel
 
 
-class Question(OrderedModel):
+class Task(OrderedModel):
   # poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
   task_text = models.TextField(max_length=250)
   task_videolink = models.CharField(max_length=150, null=True, blank=True)
   task_imagelink = models.CharField(max_length=150, null=True, blank=True)
   pub_date = models.DateTimeField(auto_now_add=True)
 
-  order_class_path = __module__ + '.Question'
+  order_class_path = __module__ + '.Task'
   # position = PositionField(collection='poll', parent_link='task_ptr')
 
   class Meta:
@@ -26,9 +26,9 @@ class Question(OrderedModel):
 
   def save(self, *args, **kwargs):
     Project = django_apps.get_model('app_projects', 'Project')
-    # If User doesn't already exist create an (empty) UserAnswer entry for each Question in the database upfront.
+    # If User doesn't already exist create an (empty) UserAnswer entry for each Task in the database upfront.
     if self.pk is None:
-      super(Question, self).save(*args, **kwargs)
+      super(Task, self).save(*args, **kwargs)
       
       all_projects = Project.objects.all()
       project_task_list = []
@@ -39,20 +39,20 @@ class Question(OrderedModel):
 
       subclass_name = self.__class__.__name__
       
-      if subclass_name == 'QuestionYesOrNo':
+      if subclass_name == 'TaskYesOrNo':
         for a_project in all_projects:
           project_task_list.append(UserAnswerYesOrNo(project = a_project, task = self))
 
         UserAnswerYesOrNo.objects.bulk_create(project_task_list)
 
-      elif subclass_name == 'QuestionOpen':
+      elif subclass_name == 'TaskOpen':
         for a_project in all_projects:
   
           project_task_list.append(UserAnswerOpen(project = a_project, task = self))
 
         UserAnswerOpen.objects.bulk_create(project_task_list)
 
-      elif subclass_name == 'QuestionMultiple':
+      elif subclass_name == 'TaskMultiple':
         for a_project in all_projects:
           project_task_list.append(UserAnswerMultiple(project = a_project, task = self))
 
@@ -61,15 +61,15 @@ class Question(OrderedModel):
           pass
     # End
     else:
-      super(Question, self).save(*args, **kwargs)
+      super(Task, self).save(*args, **kwargs)
 
-class QuestionYesOrNo(Question):
+class TaskYesOrNo(Task):
   pass
 
-class QuestionOpen(Question):
+class TaskOpen(Task):
   pass
 
-class QuestionMultiple(Question):
+class TaskMultiple(Task):
   options = ArrayField(models.CharField(max_length=150, blank=True), default=list, null=True, size=4)
 
 class UserAnswer(models.Model):
@@ -86,16 +86,16 @@ class UserAnswer(models.Model):
     return str(self.project)
 
 class UserAnswerYesOrNo(UserAnswer):
-  task = models.ForeignKey('QuestionYesOrNo', on_delete=models.CASCADE )
+  task = models.ForeignKey('TaskYesOrNo', on_delete=models.CASCADE )
   answer_value = models.IntegerField(default=-1, validators=[MaxValueValidator(2), MinValueValidator(0)])
   answer_note = models.TextField(max_length=250, null=True, blank=True)
 
 class UserAnswerOpen(UserAnswer):
-  task = models.ForeignKey('QuestionOpen', on_delete=models.CASCADE )
+  task = models.ForeignKey('TaskOpen', on_delete=models.CASCADE )
   answer_text = models.TextField(max_length=250, null=True, blank=True)
 
 class UserAnswerMultiple(UserAnswer):
-  task = models.ForeignKey('QuestionMultiple', on_delete=models.CASCADE )
+  task = models.ForeignKey('TaskMultiple', on_delete=models.CASCADE )
   answer_choice_key = models.IntegerField(default=-1, validators=[MinValueValidator(0)])
   # option_set = models.ForeignKey('OptionSet', on_delete=models.CASCADE, default=1 )
   # option = models.ForeignKey('Option', on_delete=models.CASCADE )

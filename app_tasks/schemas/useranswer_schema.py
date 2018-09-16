@@ -4,7 +4,7 @@ from graphene_django import DjangoObjectType
 
 from ..models import UserAnswer
 from .user_schema import UserType
-from .question_schema import QuestionMultipleType
+from .question_schema import TaskMultipleType
 
 
 class UserAnswerType(DjangoObjectType):
@@ -19,7 +19,7 @@ class Query(object):
 
 class UpdateUserAnswer(graphene.Mutation):
   project = graphene.Field(UserType)
-  question = graphene.Field(QuestionMultipleType)
+  question = graphene.Field(TaskMultipleType)
   answer_value = graphene.Int()
   answer_note = graphene.String()
   first_touched = graphene.types.datetime.DateTime()
