@@ -2,26 +2,26 @@ import graphene
 import datetime
 from graphene_django import DjangoObjectType
 
-from ..models import UserAnswer
+from ..models import ProjectTask
 from .user_schema import UserType
 from .task_schema import TaskMultipleType
 
 
-class UserAnswerType(DjangoObjectType):
+class ProjectTaskType(DjangoObjectType):
   class Meta:
-    model = UserAnswer
+    model = ProjectTask
 
 class Query(object):
-  user_answers = graphene.List(UserAnswerType)
+  user_tasks = graphene.List(ProjectTaskType)
 
-  def resolve_user_answers(self, info, **kwargs):
-    return UserAnswer.objects.all()
+  def resolve_user_tasks(self, info, **kwargs):
+    return ProjectTask.objects.all()
 
-class UpdateUserAnswer(graphene.Mutation):
+class UpdateProjectTask(graphene.Mutation):
   project = graphene.Field(UserType)
   task = graphene.Field(TaskMultipleType)
-  answer_value = graphene.Int()
-  answer_note = graphene.String()
+  task_value = graphene.Int()
+  task_note = graphene.String()
   first_touched = graphene.types.datetime.DateTime()
   last_touched = graphene.types.datetime.DateTime()
   count_touched = graphene.Int()
@@ -29,38 +29,38 @@ class UpdateUserAnswer(graphene.Mutation):
   
   class Arguments:
     task_id = graphene.Int(required=True)
-    answer_value = graphene.Int(required=True)
-    answer_note = graphene.String(required=True)
+    task_value = graphene.Int(required=True)
+    task_note = graphene.String(required=True)
 
-  def mutate(self, info, task_id, answer_value, answer_note):
+  def mutate(self, info, task_id, task_value, task_note):
     auth_user = info.context.user
     if auth_user.is_anonymous:
       raise Exception('You must be logged to vote!')
     
-    answer = UserAnswer.objects.filter(task_id=task_id, project_id=project.id).first()
-    if not answer:
+    task = ProjectTask.objects.filter(task_id=task_id, project_id=project.id).first()
+    if not task:
       raise Exception('Invalid Link!')
     
-    if not answer_value <= 2 and answer_value >= -1:
+    if not task_value <= 2 and task_value >= -1:
       raise Exception('Answer_value range is from -1 to 2')
     
-    answer.answer_value = answer_value
-    answer.answer_note = answer_note
-    if answer.first_touched == None:
-      answer.first_touched = datetime.datetime.now()
-    answer.count_touched += 1
-    answer.save()
+    task.task_value = task_value
+    task.task_note = task_note
+    if task.first_touched == None:
+      task.first_touched = datetime.datetime.now()
+    task.count_touched += 1
+    task.save()
 
-    return UpdateUserAnswer(
-      project = answer.project,
-      task = answer.task,
-      answer_value = answer.answer_value,
-      answer_note = answer.answer_note,
-      first_touched = answer.first_touched,
-      last_touched = answer.last_touched,
-      count_touched = answer.count_touched
+    return UpdateProjectTask(
+      project = task.project,
+      task = task.task,
+      task_value = task.task_value,
+      task_note = task.task_note,
+      first_touched = task.first_touched,
+      last_touched = task.last_touched,
+      count_touched = task.count_touched
     )
 
 class Mutation(graphene.ObjectType):
-    update_user_answer = UpdateUserAnswer.Field()
+    update_user_task = UpdateProjectTask.Field()
 

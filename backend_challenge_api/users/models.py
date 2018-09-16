@@ -3,7 +3,7 @@ from django.db.models import CharField, BooleanField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
 
 class User(AbstractUser):
@@ -13,8 +13,8 @@ class User(AbstractUser):
   name = CharField(_("Name of User"), blank=True, max_length=255)
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
-  push_notifications = BooleanField(("Push notfications enabled"), default=True)
-  reg_code = CharField(("Registration Code"),max_length=8, null=True, blank=True)
+  # push_notifications = BooleanField(("Push notfications enabled"), default=True)
+  # reg_code = CharField(("Registration Code"),max_length=8, null=True, blank=True)
   # COMMENT OUT AT NEW DEPLOY
 
   def get_absolute_url(self):
@@ -24,39 +24,39 @@ class User(AbstractUser):
     return self.username
 
   # COMMENT OUT AT NEW DEPLOY
-  def save(self, *args, **kwargs):
-    # If Task doesn't already exist create an (empty) UserAnswer entry for each User in the database upfront.
-    if self.pk is None:
+  # def save(self, *args, **kwargs):
+  #   # If Task doesn't already exist create an (empty) ProjectTask entry for each User in the database upfront.
+  #   if self.pk is None:
 
-      super(User, self).save(*args, **kwargs)
+  #     super(User, self).save(*args, **kwargs)
       
-      open_questions = TaskOpen.objects.all()
-      multiple_choice_questions = TaskMultiple.objects.all()
-      yes_or_no_questions = TaskYesOrNo.objects.all()
+  #     open_tasks = TaskOpen.objects.all()
+  #     multiple_choice_tasks = TaskMultiple.objects.all()
+  #     yes_or_no_tasks = TaskYesOrNo.objects.all()
 
-      useranswer_list = []
+  #     usertask_list = []
  
-      for new_question in open_questions:
-        useranswer_list.append(UserAnswerOpen(user = self, question = new_question))
-      UserAnswerOpen.objects.bulk_create(useranswer_list)
+  #     for new_task in open_tasks:
+  #       usertask_list.append(ProjectTaskOpen(user = self, task = new_task))
+  #     ProjectTaskOpen.objects.bulk_create(usertask_list)
 
-      useranswer_list = []
+  #     usertask_list = []
  
-      for new_question in multiple_choice_questions:
-        useranswer_list.append(UserAnswerMultiple(user = self, question = new_question))
-      UserAnswerMultiple.objects.bulk_create(useranswer_list)
+  #     for new_task in multiple_choice_tasks:
+  #       usertask_list.append(ProjectTaskMultiple(user = self, task = new_task))
+  #     ProjectTaskMultiple.objects.bulk_create(usertask_list)
       
-      useranswer_list = []  
+  #     usertask_list = []  
 
-      for new_question in yes_or_no_questions:
-        useranswer_list.append(UserAnswerYesOrNo(user = self, question = new_question))
+  #     for new_task in yes_or_no_tasks:
+  #       usertask_list.append(ProjectTaskYesOrNo(user = self, task = new_task))
       
-      UserAnswerYesOrNo.objects.bulk_create(useranswer_list)
-      useranswer_list = []  
+  #     ProjectTaskYesOrNo.objects.bulk_create(usertask_list)
+  #     usertask_list = []  
 
-    # End
-    else:
-      super(User, self).save(*args, **kwargs)
+  #   # End
+  #   else:
+  #     super(User, self).save(*args, **kwargs)
   # COMMENT OUT AT NEW DEPLOY
 
 

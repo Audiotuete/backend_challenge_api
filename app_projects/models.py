@@ -1,6 +1,6 @@
 from django.db import models
 
-from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
 
 class Project(models.Model):
@@ -19,7 +19,7 @@ class Project(models.Model):
 
   # COMMENT OUT AT NEW DEPLOY
   def save(self, *args, **kwargs):
-    # If Task doesn't already exist create an (empty) UserAnswer entry for each Project in the database upfront.
+    # If Task doesn't already exist create an (empty) ProjectTask entry for each Project in the database upfront.
     if self.pk is None:
 
       super(Project, self).save(*args, **kwargs)
@@ -31,21 +31,21 @@ class Project(models.Model):
       project_task_list = []
  
       for new_task in open_tasks:
-        project_task_list.append(UserAnswerOpen(project = self, task = new_task))
-      UserAnswerOpen.objects.bulk_create(project_task_list)
+        project_task_list.append(ProjectTaskOpen(project = self, task = new_task))
+      ProjectTaskOpen.objects.bulk_create(project_task_list)
 
       project_task_list = []
  
       for new_task in multiple_choice_tasks:
-        project_task_list.append(UserAnswerMultiple(project = self, task = new_task))
-      UserAnswerMultiple.objects.bulk_create(project_task_list)
+        project_task_list.append(ProjectTaskMultiple(project = self, task = new_task))
+      ProjectTaskMultiple.objects.bulk_create(project_task_list)
       
       project_task_list = []  
 
       for new_task in yes_or_no_tasks:
-        project_task_list.append(UserAnswerYesOrNo(project = self, task = new_task))
+        project_task_list.append(ProjectTaskYesOrNo(project = self, task = new_task))
       
-      UserAnswerYesOrNo.objects.bulk_create(project_task_list)
+      ProjectTaskYesOrNo.objects.bulk_create(project_task_list)
       project_task_list = []  
 
     # End

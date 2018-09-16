@@ -9,21 +9,21 @@ from .schemas.user_schema import Query as UserQuery
 from .schemas.user_schema import Mutation as UserMutation
 # from .schemas.user_schema import Mutation as UserMutation
 
-from .schemas.project_task_schema import Query as UserAnswerQuery
-from .schemas.project_task_schema import Mutation as UserAnswerMutation
+from .schemas.project_task_schema import Query as ProjectTaskQuery
+from .schemas.project_task_schema import Mutation as ProjectTaskMutation
 
 
 class Query(
   UserQuery,
   AllQuesetions,
-  UserAnswerQuery,
+  ProjectTaskQuery,
   graphene.ObjectType
 ):
   pass
 
 class Mutation(
   UserMutation,
-  UserAnswerMutation,
+  ProjectTaskMutation,
   graphene.ObjectType
 ):
   token_auth = graphql_jwt.ObtainJSONWebToken.Field()

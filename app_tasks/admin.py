@@ -1,7 +1,7 @@
 from django.contrib import admin
 from ordered_model.admin import OrderedModelAdmin
 
-from .models import TaskOpen, TaskYesOrNo, TaskMultiple, UserAnswerOpen, UserAnswerYesOrNo, UserAnswerMultiple, Task
+from .models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple, Task
 
 class TaskAdmin(OrderedModelAdmin):
   model = Task
@@ -22,8 +22,8 @@ class TaskAdmin(OrderedModelAdmin):
     else:
         return []
 
-class UserAnswerOpenAdmin(admin.ModelAdmin):
-  model = UserAnswerOpen
+class ProjectTaskOpenAdmin(admin.ModelAdmin):
+  model = ProjectTaskOpen
   list_display = [ 'project', 'task'  ]
   actions = None
 
@@ -32,9 +32,9 @@ class UserAnswerOpenAdmin(admin.ModelAdmin):
   def has_delete_permission(self, request, obj=None):
     return False
 
-class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
-  model = UserAnswerYesOrNo
-  list_display = [ 'project', 'task', 'answer_value', 'answer_note']
+class ProjectTaskYesOrNoAdmin(admin.ModelAdmin):
+  model = ProjectTaskYesOrNo
+  list_display = [ 'project', 'task', 'task_value', 'task_note']
   actions = None
 
   def has_add_permission(self, request):
@@ -42,8 +42,8 @@ class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
   def has_delete_permission(self, request, obj=None):
     return False
 
-class UserAnswerMultipleAdmin(admin.ModelAdmin):
-  model = UserAnswerMultiple
+class ProjectTaskMultipleAdmin(admin.ModelAdmin):
+  model = ProjectTaskMultiple
   list_display = [ 'project', 'task']
   actions = None
 
@@ -57,6 +57,6 @@ admin.site.register(Task, TaskAdmin)
 admin.site.register(TaskOpen)
 admin.site.register(TaskYesOrNo)
 admin.site.register(TaskMultiple)
-admin.site.register(UserAnswerOpen, UserAnswerOpenAdmin)
-admin.site.register(UserAnswerYesOrNo, UserAnswerYesOrNoAdmin)
-admin.site.register(UserAnswerMultiple, UserAnswerMultipleAdmin)
+admin.site.register(ProjectTaskOpen, ProjectTaskOpenAdmin)
+admin.site.register(ProjectTaskYesOrNo, ProjectTaskYesOrNoAdmin)
+admin.site.register(ProjectTaskMultiple, ProjectTaskMultipleAdmin)
