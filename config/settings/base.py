@@ -44,7 +44,7 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # GRAPHQL API
 GRAPHENE = {
-    'SCHEMA': 'app_challenge.schema.schema',
+    'SCHEMA': 'app_tasks.schema.schema',
 }
 # URLS
 # ------------------------------------------------------------------------------
@@ -78,7 +78,10 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'backend_challenge_api.users.apps.UsersAppConfig',
-    'app_challenge.apps.AppHotornotConfig',
+    'app_challenges.apps.AppChallengesConfig',
+    'app_projects.apps.AppProjectsConfig',
+    'app_tasks.apps.AppTasksConfig',
+
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

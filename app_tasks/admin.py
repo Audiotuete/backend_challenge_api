@@ -24,7 +24,7 @@ class QuestionAdmin(OrderedModelAdmin):
 
 class UserAnswerOpenAdmin(admin.ModelAdmin):
   model = UserAnswerOpen
-  list_display = [ 'user', 'question'  ]
+  list_display = [ 'project', 'question'  ]
   actions = None
 
   def has_add_permission(self, request):
@@ -34,7 +34,7 @@ class UserAnswerOpenAdmin(admin.ModelAdmin):
 
 class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
   model = UserAnswerYesOrNo
-  list_display = [ 'user', 'question', 'answer_value', 'answer_note']
+  list_display = [ 'project', 'question', 'answer_value', 'answer_note']
   actions = None
 
   def has_add_permission(self, request):
@@ -44,7 +44,7 @@ class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
 
 class UserAnswerMultipleAdmin(admin.ModelAdmin):
   model = UserAnswerMultiple
-  list_display = [ 'user', 'question']
+  list_display = [ 'project', 'question']
   actions = None
 
   def has_add_permission(self, request):

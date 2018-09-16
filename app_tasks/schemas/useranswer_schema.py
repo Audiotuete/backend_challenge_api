@@ -18,7 +18,7 @@ class Query(object):
     return UserAnswer.objects.all()
 
 class UpdateUserAnswer(graphene.Mutation):
-  user = graphene.Field(UserType)
+  project = graphene.Field(UserType)
   question = graphene.Field(QuestionMultipleType)
   answer_value = graphene.Int()
   answer_note = graphene.String()
@@ -33,11 +33,11 @@ class UpdateUserAnswer(graphene.Mutation):
     answer_note = graphene.String(required=True)
 
   def mutate(self, info, question_id, answer_value, answer_note):
-    user = info.context.user
-    if user.is_anonymous:
+    auth_user = info.context.user
+    if auth_user.is_anonymous:
       raise Exception('You must be logged to vote!')
     
-    answer = UserAnswer.objects.filter(question_id=question_id, user_id=user.id).first()
+    answer = UserAnswer.objects.filter(question_id=question_id, project_id=project.id).first()
     if not answer:
       raise Exception('Invalid Link!')
     
@@ -52,7 +52,7 @@ class UpdateUserAnswer(graphene.Mutation):
     answer.save()
 
     return UpdateUserAnswer(
-      user = answer.user,
+      project = answer.project,
       question = answer.question,
       answer_value = answer.answer_value,
       answer_note = answer.answer_note,

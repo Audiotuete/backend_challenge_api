@@ -1,17 +1,10 @@
+from django.apps import apps as django_apps
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from ordered_model.models import OrderedModel
-
-
-# class Poll(models.Model):
-#   name = models.CharField(max_length=50)
-#   description = models.TextField(max_length=250)
-  
-#   def __str__(self):
-#     return self.name
 
 
 class Question(OrderedModel):
@@ -32,38 +25,38 @@ class Question(OrderedModel):
     return self.question_text
 
   def save(self, *args, **kwargs):
-    User = get_user_model()
+    Project = django_apps.get_model('app_projects', 'Project')
     # If User doesn't already exist create an (empty) UserAnswer entry for each Question in the database upfront.
     if self.pk is None:
       super(Question, self).save(*args, **kwargs)
       
-      all_users = User.objects.all()
-      useranswer_list = []
-      # for a_user in all_users:
-      #     useranswer_list.append(UserAnswer(user = a_user, question = self))
+      all_projects = Project.objects.all()
+      project_task_list = []
+      # for a_project in all_projects:
+      #     project_task_list.append(UserAnswer(project = a_project, question = self))
 
-      # UserAnswer.objects.bulk_create(useranswer_list)     
+      # UserAnswer.objects.bulk_create(project_task_list)     
 
       subclass_name = self.__class__.__name__
       
       if subclass_name == 'QuestionYesOrNo':
-        for a_user in all_users:
-          useranswer_list.append(UserAnswerYesOrNo(user = a_user, question = self))
+        for a_project in all_projects:
+          project_task_list.append(UserAnswerYesOrNo(project = a_project, question = self))
 
-        UserAnswerYesOrNo.objects.bulk_create(useranswer_list)
+        UserAnswerYesOrNo.objects.bulk_create(project_task_list)
 
       elif subclass_name == 'QuestionOpen':
-        for a_user in all_users:
+        for a_project in all_projects:
   
-          useranswer_list.append(UserAnswerOpen(user = a_user, question = self))
+          project_task_list.append(UserAnswerOpen(project = a_project, question = self))
 
-        UserAnswerOpen.objects.bulk_create(useranswer_list)
+        UserAnswerOpen.objects.bulk_create(project_task_list)
 
       elif subclass_name == 'QuestionMultiple':
-        for a_user in all_users:
-          useranswer_list.append(UserAnswerMultiple(user = a_user, question = self))
+        for a_project in all_projects:
+          project_task_list.append(UserAnswerMultiple(project = a_project, question = self))
 
-        UserAnswerMultiple.objects.bulk_create(useranswer_list)
+        UserAnswerMultiple.objects.bulk_create(project_task_list)
       else:
           pass
     # End
@@ -80,17 +73,17 @@ class QuestionMultiple(Question):
   options = ArrayField(models.CharField(max_length=150, blank=True), default=list, null=True, size=4)
 
 class UserAnswer(models.Model):
-  user = models.ForeignKey(settings.AUTH_USER_MODEL, default=0, on_delete=models.CASCADE)
+  project = models.ForeignKey('app_projects.Project', default=0, on_delete=models.CASCADE)
   first_touched = models.DateTimeField(null=True, blank=True)
   last_touched = models.DateTimeField(auto_now=True)
   count_touched = models.PositiveIntegerField(default=0)
 
   class Meta:
     abstract = True
-    unique_together = ['user', 'question']
+    unique_together = ['project', 'question']
 
   def __str__(self):
-    return str(self.user)
+    return str(self.project)
 
 class UserAnswerYesOrNo(UserAnswer):
   question = models.ForeignKey('QuestionYesOrNo', on_delete=models.CASCADE )
