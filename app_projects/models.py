@@ -7,11 +7,17 @@ class Project(models.Model):
 
   # First Name and Last Name do not cover name patterns
   # around the globe.
+
+  # challenge =
+  # project_creator = 
+
   project_name = models.CharField(("Projectname"), blank=True, max_length=255)
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
   push_notifications = models.BooleanField(("Push notfications enabled"), default=True)
-  reg_code = models.CharField(("Registration Code"),max_length=8, null=True, blank=True)
+  project_code = models.CharField(("Registration Code"),max_length=8, null=True, blank=True)
+
+
   # COMMENT OUT AT NEW DEPLOY
   
   def __str__(self):
