@@ -9,20 +9,20 @@ from ordered_model.models import OrderedModel
 
 class Question(OrderedModel):
   # poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
-  question_text = models.TextField(max_length=250)
-  question_videolink = models.CharField(max_length=150, null=True, blank=True)
-  question_imagelink = models.CharField(max_length=150, null=True, blank=True)
+  task_text = models.TextField(max_length=250)
+  task_videolink = models.CharField(max_length=150, null=True, blank=True)
+  task_imagelink = models.CharField(max_length=150, null=True, blank=True)
   pub_date = models.DateTimeField(auto_now_add=True)
 
   order_class_path = __module__ + '.Question'
-  # position = PositionField(collection='poll', parent_link='question_ptr')
+  # position = PositionField(collection='poll', parent_link='task_ptr')
 
   class Meta:
     ordering = ('order',)
     # abstract = True
 
   def __str__(self):
-    return self.question_text
+    return self.task_text
 
   def save(self, *args, **kwargs):
     Project = django_apps.get_model('app_projects', 'Project')
@@ -33,7 +33,7 @@ class Question(OrderedModel):
       all_projects = Project.objects.all()
       project_task_list = []
       # for a_project in all_projects:
-      #     project_task_list.append(UserAnswer(project = a_project, question = self))
+      #     project_task_list.append(UserAnswer(project = a_project, task = self))
 
       # UserAnswer.objects.bulk_create(project_task_list)     
 
@@ -41,20 +41,20 @@ class Question(OrderedModel):
       
       if subclass_name == 'QuestionYesOrNo':
         for a_project in all_projects:
-          project_task_list.append(UserAnswerYesOrNo(project = a_project, question = self))
+          project_task_list.append(UserAnswerYesOrNo(project = a_project, task = self))
 
         UserAnswerYesOrNo.objects.bulk_create(project_task_list)
 
       elif subclass_name == 'QuestionOpen':
         for a_project in all_projects:
   
-          project_task_list.append(UserAnswerOpen(project = a_project, question = self))
+          project_task_list.append(UserAnswerOpen(project = a_project, task = self))
 
         UserAnswerOpen.objects.bulk_create(project_task_list)
 
       elif subclass_name == 'QuestionMultiple':
         for a_project in all_projects:
-          project_task_list.append(UserAnswerMultiple(project = a_project, question = self))
+          project_task_list.append(UserAnswerMultiple(project = a_project, task = self))
 
         UserAnswerMultiple.objects.bulk_create(project_task_list)
       else:
@@ -80,22 +80,22 @@ class UserAnswer(models.Model):
 
   class Meta:
     abstract = True
-    unique_together = ['project', 'question']
+    unique_together = ['project', 'task']
 
   def __str__(self):
     return str(self.project)
 
 class UserAnswerYesOrNo(UserAnswer):
-  question = models.ForeignKey('QuestionYesOrNo', on_delete=models.CASCADE )
+  task = models.ForeignKey('QuestionYesOrNo', on_delete=models.CASCADE )
   answer_value = models.IntegerField(default=-1, validators=[MaxValueValidator(2), MinValueValidator(0)])
   answer_note = models.TextField(max_length=250, null=True, blank=True)
 
 class UserAnswerOpen(UserAnswer):
-  question = models.ForeignKey('QuestionOpen', on_delete=models.CASCADE )
+  task = models.ForeignKey('QuestionOpen', on_delete=models.CASCADE )
   answer_text = models.TextField(max_length=250, null=True, blank=True)
 
 class UserAnswerMultiple(UserAnswer):
-  question = models.ForeignKey('QuestionMultiple', on_delete=models.CASCADE )
+  task = models.ForeignKey('QuestionMultiple', on_delete=models.CASCADE )
   answer_choice_key = models.IntegerField(default=-1, validators=[MinValueValidator(0)])
   # option_set = models.ForeignKey('OptionSet', on_delete=models.CASCADE, default=1 )
   # option = models.ForeignKey('Option', on_delete=models.CASCADE )

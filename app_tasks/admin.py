@@ -5,7 +5,7 @@ from .models import QuestionOpen, QuestionYesOrNo, QuestionMultiple, UserAnswerO
 
 class QuestionAdmin(OrderedModelAdmin):
   model = Question
-  list_display = ('question_text', 'move_up_down_links')
+  list_display = ('task_text', 'move_up_down_links')
 
   def has_add_permission(self, request):
     return False
@@ -15,16 +15,16 @@ class QuestionAdmin(OrderedModelAdmin):
   def get_readonly_fields(self, request, obj=None):
     if obj:
         return [
-          'question_text', 
-          'question_imagelink',
-          'question_videolink',
+          'task_text', 
+          'task_imagelink',
+          'task_videolink',
           ]
     else:
         return []
 
 class UserAnswerOpenAdmin(admin.ModelAdmin):
   model = UserAnswerOpen
-  list_display = [ 'project', 'question'  ]
+  list_display = [ 'project', 'task'  ]
   actions = None
 
   def has_add_permission(self, request):
@@ -34,7 +34,7 @@ class UserAnswerOpenAdmin(admin.ModelAdmin):
 
 class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
   model = UserAnswerYesOrNo
-  list_display = [ 'project', 'question', 'answer_value', 'answer_note']
+  list_display = [ 'project', 'task', 'answer_value', 'answer_note']
   actions = None
 
   def has_add_permission(self, request):
@@ -44,7 +44,7 @@ class UserAnswerYesOrNoAdmin(admin.ModelAdmin):
 
 class UserAnswerMultipleAdmin(admin.ModelAdmin):
   model = UserAnswerMultiple
-  list_display = [ 'project', 'question']
+  list_display = [ 'project', 'task']
   actions = None
 
   def has_add_permission(self, request):

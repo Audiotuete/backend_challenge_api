@@ -24,26 +24,26 @@ class Project(models.Model):
 
       super(Project, self).save(*args, **kwargs)
       
-      open_questions = QuestionOpen.objects.all()
-      multiple_choice_questions = QuestionMultiple.objects.all()
-      yes_or_no_questions = QuestionYesOrNo.objects.all()
+      open_tasks = QuestionOpen.objects.all()
+      multiple_choice_tasks = QuestionMultiple.objects.all()
+      yes_or_no_tasks = QuestionYesOrNo.objects.all()
 
       project_task_list = []
  
-      for new_question in open_questions:
-        project_task_list.append(UserAnswerOpen(project = self, question = new_question))
+      for new_task in open_tasks:
+        project_task_list.append(UserAnswerOpen(project = self, task = new_task))
       UserAnswerOpen.objects.bulk_create(project_task_list)
 
       project_task_list = []
  
-      for new_question in multiple_choice_questions:
-        project_task_list.append(UserAnswerMultiple(project = self, question = new_question))
+      for new_task in multiple_choice_tasks:
+        project_task_list.append(UserAnswerMultiple(project = self, task = new_task))
       UserAnswerMultiple.objects.bulk_create(project_task_list)
       
       project_task_list = []  
 
-      for new_question in yes_or_no_questions:
-        project_task_list.append(UserAnswerYesOrNo(project = self, question = new_question))
+      for new_task in yes_or_no_tasks:
+        project_task_list.append(UserAnswerYesOrNo(project = self, task = new_task))
       
       UserAnswerYesOrNo.objects.bulk_create(project_task_list)
       project_task_list = []  
