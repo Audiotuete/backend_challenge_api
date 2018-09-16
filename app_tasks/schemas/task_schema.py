@@ -8,7 +8,7 @@ from ..models import Task, TaskMultiple, TaskOpen, TaskYesOrNo
 class BaseTask(graphene.Interface):
   id = graphene.Int()
   order = graphene.Int()
-  question_text = graphene.String()
+  task_text = graphene.String()
 
 
 class TaskMultipleType(DjangoObjectType):
@@ -28,20 +28,20 @@ class TaskYesOrNoType(DjangoObjectType):
     interfaces = [ BaseTask ]
 
 class AllQuesetions(graphene.ObjectType):
-  all_questions = graphene.List(BaseTask)
+  all_tasks = graphene.List(BaseTask)
 
-  def resolve_all_questions(self, info, **kwargs):
+  def resolve_all_tasks(self, info, **kwargs):
 
-    multi_questions = TaskMultiple.objects.all()
-    yes_no_questions = TaskYesOrNo.objects.all()
-    open_questions = TaskOpen.objects.all()
+    multi_tasks = TaskMultiple.objects.all()
+    yes_no_tasks = TaskYesOrNo.objects.all()
+    open_tasks = TaskOpen.objects.all()
 
-    all_questions = sorted(
+    all_tasks = sorted(
       chain(
-        multi_questions, 
-        yes_no_questions, 
-        open_questions
+        multi_tasks, 
+        yes_no_tasks, 
+        open_tasks
       ),key=lambda instance: instance.order)
 
-    return all_questions
+    return all_tasks
 

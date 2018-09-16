@@ -2,16 +2,15 @@ import graphene
 import graphql_jwt
 
 
-from .schemas.question_schema import AllQuesetions
-from .schemas.question_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
-
+from .schemas.task_schema import AllQuesetions
+from .schemas.task_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
 
 from .schemas.user_schema import Query as UserQuery
 from .schemas.user_schema import Mutation as UserMutation
 # from .schemas.user_schema import Mutation as UserMutation
 
-from .schemas.useranswer_schema import Query as UserAnswerQuery
-from .schemas.useranswer_schema import Mutation as UserAnswerMutation
+from .schemas.project_task_schema import Query as UserAnswerQuery
+from .schemas.project_task_schema import Mutation as UserAnswerMutation
 
 
 class Query(
