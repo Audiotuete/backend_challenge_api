@@ -44,7 +44,7 @@ class ProjectTaskYesOrNoAdmin(admin.ModelAdmin):
 
 class ProjectTaskMultipleAdmin(admin.ModelAdmin):
   model = ProjectTaskMultiple
-  list_display = [ 'project', 'task']
+  list_display = [ 'project', 'task', 'submitted_by']
   actions = None
 
   def has_add_permission(self, request):

@@ -2,21 +2,23 @@ import graphene
 import graphql_jwt
 
 
-from .schemas.task_schema import AllQuesetions
-from .schemas.task_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
+from .schemas.task_schema import AllTasks, TaskMultipleType, TaskOpenType, TaskYesOrNoType
 
-from .schemas.user_schema import Query as UserQuery
-from .schemas.user_schema import Mutation as UserMutation
-# from .schemas.user_schema import Mutation as UserMutation
+from backend_challenge_api.users.schema import AllUsers
+from backend_challenge_api.users.schema import Mutation as UserMutation
 
-from .schemas.project_task_schema import Query as ProjectTaskQuery
+from app_projects.schema import AllProjects
+from app_projects.schema import Mutation as ProjectMutation
+
+from .schemas.project_task_schema import AllProjectTask
 from .schemas.project_task_schema import Mutation as ProjectTaskMutation
 
 
 class Query(
-  UserQuery,
-  AllQuesetions,
-  ProjectTaskQuery,
+  AllUsers,
+  AllTasks,
+  AllProjects,
+  AllProjectTask,
   graphene.ObjectType
 ):
   pass
@@ -24,6 +26,7 @@ class Query(
 class Mutation(
   UserMutation,
   ProjectTaskMutation,
+  ProjectMutation,
   graphene.ObjectType
 ):
   token_auth = graphql_jwt.ObtainJSONWebToken.Field()

@@ -24,7 +24,14 @@ class Challenge(models.Model):
     # If Challenge doesn't already exist create a new Challenge
     if self.pk is None:
 
-      self.challenge_code = get_random_string(length=7).upper()
+# MAKE CHALLENGE CODE UNEDITABLE
+
+      # generated_code = get_random_string(length=7).upper()
+      
+      # while Challenges.objects.filter(challenge_code = generated_code):
+      #   generated_code = get_random_string(length=7).upper()
+
+      self.challenge_code = generated_code
 
       super(Challenge, self).save(*args, **kwargs)
 
