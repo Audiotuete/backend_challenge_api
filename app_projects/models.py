@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
@@ -8,9 +9,8 @@ class Project(models.Model):
   # First Name and Last Name do not cover name patterns
   # around the globe.
 
-  # challenge =
-  # project_creator = 
-
+  challenge = models.ForeignKey('app_challenges.Challenge', default=1, on_delete=models.PROTECT)
+  project_creator = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.PROTECT)
   project_name = models.CharField(("Projectname"), blank=True, max_length=255)
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)

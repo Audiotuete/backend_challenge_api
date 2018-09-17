@@ -1,8 +1,6 @@
 from django.apps import apps as django_apps
 from django.db import models
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth import get_user_model
 from django.contrib.postgres.fields import ArrayField
 from ordered_model.models import OrderedModel
 
@@ -73,7 +71,7 @@ class TaskMultiple(Task):
   options = ArrayField(models.CharField(max_length=150, blank=True), default=list, null=True, size=4)
 
 class ProjectTask(models.Model):
-  project = models.ForeignKey('app_projects.Project', default=0, on_delete=models.CASCADE)
+  project = models.ForeignKey('app_projects.Project', default=1, on_delete=models.CASCADE)
   first_touched = models.DateTimeField(null=True, blank=True)
   last_touched = models.DateTimeField(auto_now=True)
   count_touched = models.PositiveIntegerField(default=0)

@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Challenge(models.Model):
 
   # First Name and Last Name do not cover name patterns
@@ -17,4 +16,4 @@ class Challenge(models.Model):
   # COMMENT OUT AT NEW DEPLOY
   
   def __str__(self):
-    return self.project_name
+    return self.city
