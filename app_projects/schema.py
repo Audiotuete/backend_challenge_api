@@ -18,19 +18,19 @@ class AllProjects(graphene.ObjectType):
 
 # MUTATIONS
 class CreateProject(graphene.Mutation):
-    project = graphene.Field(ProjectType)
+  project = graphene.Field(ProjectType)
 
-    class Arguments:
-        project_name = graphene.String(required=True)
+  class Arguments:
+    project_name = graphene.String(required=True)
 
-    def mutate(self, info, project_name, password):
-        project = django_apps.get_model('app_projects', 'Project')
-        project_name=project_name
-        
-        project.save()
+  def mutate(self, info, project_name, password):
+    project = django_apps.get_model('app_projects', 'Project')
+    project_name = project_name
+    
+    project.save()
 
-        return CreateProject(project=project)
+    return CreateProject(project=project)
 
 
 class Mutation(graphene.ObjectType):
-    create_user = CreateProject.Field()
+  create_user = CreateProject.Field()

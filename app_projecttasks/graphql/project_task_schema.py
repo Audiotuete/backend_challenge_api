@@ -6,9 +6,9 @@ from itertools import chain
 
 from ..models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
 
-from backend_challenge_api.users.schema import UserType
+from backend_challenge_api.users.graphql.schema import UserType
 from app_projects.schema import ProjectType
-from .task_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
+from app_tasks.graphql.task_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
 
 class BaseProjectTaskType(graphene.Interface):
   id = graphene.Int()
@@ -36,7 +36,7 @@ class ProjectTaskYesOrNoType(DjangoObjectType):
     model = ProjectTaskYesOrNo
     interfaces = [ BaseProjectTaskType ]
 
-class AllProjectTask(graphene.ObjectType):
+class AllProjectTasks(graphene.ObjectType):
   all_project_tasks = graphene.List(BaseProjectTaskType, projectid = graphene.ID())
 
   def resolve_all_project_tasks(self, info, projectid=None, **kwargs):
@@ -74,7 +74,7 @@ class UpdateProjectTaskMultiple(graphene.Mutation):
   def mutate(self, info, task_id, project_id, status):
     current_user = info.context.user
     if current_user.is_anonymous:
-      raise Exception('You must be logged to vote!')
+      raise Exception('You must be logged to do this!')
     
     open_task = ProjectTaskMultiple.objects.filter(task_id=task_id, project_id=project_id).first()
     if not open_task:

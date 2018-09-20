@@ -3,7 +3,8 @@ from django.db.models import CharField, BooleanField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple
+from app_projecttasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
 
 class User(AbstractUser):

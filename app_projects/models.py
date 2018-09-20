@@ -1,7 +1,9 @@
 from django.db import models
 from django.conf import settings
 
-from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
+from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple
+from app_projecttasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
+
 
 
 class Project(models.Model):
@@ -11,11 +13,12 @@ class Project(models.Model):
 
   challenge = models.ForeignKey('app_challenges.Challenge', default=1, on_delete=models.PROTECT)
   project_creator = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.PROTECT)
-  project_name = models.CharField(("Projectname"), blank=True, max_length=255)
+  project_name = models.CharField(("Projekt-Titel"), blank=True, max_length=140)
+  project_description = models.TextField(("Projektbeschreibung"), blank=True, max_length=255)
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
-  push_notifications = models.BooleanField(("Push notfications enabled"), default=True)
-  project_code = models.CharField(("Registration Code"),max_length=8, null=True, blank=True)
+  push_notifications = models.BooleanField(("Push notfications"), default=True)
+  project_code = models.CharField(("Project Code"),max_length=8, null=True, blank=True)
 
 
   # COMMENT OUT AT NEW DEPLOY
