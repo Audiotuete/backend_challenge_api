@@ -3,6 +3,9 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from ordered_model.models import OrderedModel
 
+from app_project_tasks.models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
+
+
 
 class Task(OrderedModel):
   # poll = models.ForeignKey('Poll', on_delete=models.CASCADE)

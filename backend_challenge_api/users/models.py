@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple
-from app_projecttasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
+from app_project_tasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
 
 class User(AbstractUser):

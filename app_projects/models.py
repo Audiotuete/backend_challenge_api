@@ -1,12 +1,18 @@
 from django.db import models
 from django.conf import settings
+from django.utils.crypto import get_random_string
 
 from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple
-from app_projecttasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
+from app_project_tasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
 
 
 
 class Project(models.Model):
+
+  class Meta:
+    indexes = [
+        models.Index(fields=['project_code',]),
+    ]
 
   # First Name and Last Name do not cover name patterns
   # around the globe.
@@ -18,7 +24,7 @@ class Project(models.Model):
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
   push_notifications = models.BooleanField(("Push notfications"), default=True)
-  project_code = models.CharField(("Project Code"),max_length=8, null=True, blank=True)
+  project_code = models.CharField(("Project Code"),max_length=7, blank=True, unique=True)
 
 
   # COMMENT OUT AT NEW DEPLOY
@@ -30,6 +36,13 @@ class Project(models.Model):
   def save(self, *args, **kwargs):
     # If Task doesn't already exist create an (empty) ProjectTask entry for each Project in the database upfront.
     if self.pk is None:
+
+      generated_code = get_random_string(length=7).lower()
+
+      while Project.objects.filter(project_code = generated_code):
+        generated_code = get_random_string(length=7).lower()
+
+      self.project_code = generated_code
 
       super(Project, self).save(*args, **kwargs)
       

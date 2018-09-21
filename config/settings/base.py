@@ -44,7 +44,7 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # GRAPHQL API
 GRAPHENE = {
-    'SCHEMA': 'app_tasks.schema.schema',
+    'SCHEMA': 'backend_challenge_api.graphql_schema.schema',
 }
 # URLS
 # ------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ LOCAL_APPS = [
     'backend_challenge_api.users.apps.UsersAppConfig',
     'app_challenges.apps.AppChallengesConfig',
     'app_projects.apps.AppProjectsConfig',
-    'app_projecttasks.apps.AppProjectTasksConfig',
+    'app_project_tasks.apps.AppProjectTasksConfig',
     'app_tasks.apps.AppTasksConfig',
 
     # Your stuff: custom apps go here
