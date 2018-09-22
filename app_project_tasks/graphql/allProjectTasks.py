@@ -1,5 +1,7 @@
 import graphene
 from itertools import chain
+from graphql_jwt.decorators import login_required
+
 
 # Types
 from .__types import BaseProjectTaskType
@@ -12,6 +14,7 @@ class AllProjectTasks(graphene.ObjectType):
 
   all_project_tasks = graphene.List(BaseProjectTaskType, projectid = graphene.ID())
 
+  @login_required
   def resolve_all_project_tasks(self, info, projectid=None, **kwargs):
 
     multi_project_tasks = ProjectTaskMultiple.objects.filter(project_id = projectid)

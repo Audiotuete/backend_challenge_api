@@ -1,4 +1,5 @@
 import graphene
+from graphql_jwt.decorators import login_required
 from itertools import chain
 
 #Types
@@ -8,10 +9,10 @@ from .__types import BaseTaskType
 from ..models import TaskMultiple, TaskOpen, TaskYesOrNo
 
 
-
 class AllTasks(graphene.ObjectType):
   all_tasks = graphene.List(BaseTaskType)
-
+  
+  @login_required
   def resolve_all_tasks(self, info, **kwargs):
 
     multi_tasks = TaskMultiple.objects.all()

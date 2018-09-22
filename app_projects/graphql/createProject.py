@@ -1,5 +1,8 @@
-import graphene
+
 from django.apps import apps as django_apps
+
+import graphene
+from graphql_jwt.decorators import login_required
 
 #Types
 from .__types import ProjectType
@@ -15,6 +18,8 @@ class CreateProjectMutation(graphene.Mutation):
     project_description = graphene.String(required=True)
     challenge_code = graphene.String(required=True)
 
+  @classmethod  
+  @login_required
   def mutate(self, info, projectName, projectDescription, challengeCode):
     
     currentUser = info.context.user
@@ -35,7 +40,9 @@ class CreateProjectMutation(graphene.Mutation):
     currentUser.currentProject = project 
     currentUser.save()
 
-    return CreateProjectMutation(project=project)
+    return CreateProjectMutation(
+      project=project
+      )
 
 class CreateProject(graphene.ObjectType):
   create_project = CreateProjectMutation.Field()

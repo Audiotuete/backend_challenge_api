@@ -1,5 +1,8 @@
-import graphene
 from django.apps import apps as django_apps
+
+import graphene
+from graphql_jwt.decorators import login_required
+
 
 #Types
 from .__types import ProjectType
@@ -13,7 +16,9 @@ class JoinProjectMutation(graphene.Mutation):
   class Arguments:
     projectCode = graphene.String(required=True)
     challengeCode = graphene.String(required=True)
-
+  
+  @classmethod  
+  @login_required
   def mutate(self, info, projectCode, challengeCode):
     
     #Find correct Project inside correct Challenge

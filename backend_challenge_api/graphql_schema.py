@@ -2,7 +2,6 @@ import graphene
 import graphql_jwt
 
 from app_tasks.graphql.__types import TaskMultipleType, TaskOpenType, TaskYesOrNoType
-# from app_tasks.graphql.allTasks import AllTasks
 
 from backend_challenge_api.users.graphql.currentUser import CurrentUser
 # from backend_challenge_api.users.graphql.allUsers import AllUsers
@@ -13,10 +12,8 @@ from app_challenges.graphql.aChallenge import AChallenge
 from app_projects.graphql.aProject import AProject
 from app_projects.graphql.allProjects import AllProjects
 from app_projects.graphql.joinProject import JoinProject
-
 from app_projects.graphql.createProject import CreateProject
 
-# from app_project_tasks.graphql import AllProjectTasks
 from app_project_tasks.graphql.allProjectTasks import AllProjectTasks
 from app_project_tasks.graphql.updateProjectTask__ import UpdateProjectTaskMultiple
 

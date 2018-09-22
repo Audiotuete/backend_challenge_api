@@ -1,4 +1,6 @@
 import graphene
+from graphql_jwt.decorators import login_required
+
 import datetime
 
 # Types
@@ -8,7 +10,6 @@ from app_projects.graphql.__types import ProjectType
 
 # Models
 from ..models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
-
 
 
 class UpdateProjectTaskMultipleMutation(graphene.Mutation):
@@ -27,6 +28,8 @@ class UpdateProjectTaskMultipleMutation(graphene.Mutation):
     status = graphene.Boolean()
     project_id = graphene.ID(required=True)
 
+  @classmethod  
+  @login_required
   def mutate(self, info, task_id, project_id, status):
     current_user = info.context.user
     if current_user.is_anonymous:

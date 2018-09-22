@@ -20,6 +20,6 @@ django-ordered-model==2.1.0 # https://github.com/bfirsh/django-ordered-model
 graphene==2.0.1
 graphene-django==2.0.0
 django-filter==1.1.0
-django-graphql-jwt==0.1.5
+django-graphql-jwt==0.1.12
 django-cors-headers==2.4.0
 
