@@ -18,9 +18,9 @@ class Project(models.Model):
   # around the globe.
 
   challenge = models.ForeignKey('app_challenges.Challenge', default=1, on_delete=models.PROTECT)
-  project_creator = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-  project_name = models.CharField(("Projekt-Titel"), blank=True, max_length=140)
-  project_description = models.TextField(("Projektbeschreibung"), blank=True, max_length=255)
+  project_creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True )
+  project_name = models.CharField(("Projekt-Titel"), max_length=140, unique=True)
+  project_description = models.TextField(("Projektbeschreibung"), max_length=255)
 
   # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
   push_notifications = models.BooleanField(("Push notfications"), default=True)

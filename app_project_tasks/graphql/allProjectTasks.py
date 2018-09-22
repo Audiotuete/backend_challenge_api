@@ -1,13 +1,15 @@
 import graphene
 from itertools import chain
 
-# Models
-from app_project_tasks.models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
-
 # Types
 from .__types import BaseProjectTaskType
 
+# Models
+from ..models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
+
+
 class AllProjectTasks(graphene.ObjectType):
+
   all_project_tasks = graphene.List(BaseProjectTaskType, projectid = graphene.ID())
 
   def resolve_all_project_tasks(self, info, projectid=None, **kwargs):

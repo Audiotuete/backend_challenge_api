@@ -1,7 +1,8 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from app_tasks.models import TaskMultiple, TaskOpen, TaskYesOrNo
+#Models
+from ..models import TaskMultiple, TaskOpen, TaskYesOrNo
 
 
 class BaseTaskType(graphene.Interface):

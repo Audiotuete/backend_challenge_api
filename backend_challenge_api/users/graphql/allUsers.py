@@ -1,11 +1,12 @@
 import graphene
-from django.contrib.auth import get_user_model
 
+#Types
 from .__types import UserType
 
-User = get_user_model()
+#Models
+from ..models import User
 
-# QUERYS
+
 class AllUsers(graphene.ObjectType):
   all_users = graphene.List(UserType)
 

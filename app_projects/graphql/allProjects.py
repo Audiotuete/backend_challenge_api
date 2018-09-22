@@ -1,9 +1,10 @@
-from django.apps import apps as django_apps
 import graphene
 
+#Types
 from .__types import ProjectType
 
-Project = django_apps.get_model('app_projects', 'Project')
+#Models
+from ..models import Project
 
 class AllProjects(graphene.ObjectType):
   all_projects = graphene.List(ProjectType)

@@ -1,9 +1,13 @@
 import graphene
 from itertools import chain
 
+#Types
+from .__types import BaseTaskType
+
+#Models
 from ..models import TaskMultiple, TaskOpen, TaskYesOrNo
 
-from .__types import BaseTaskType
+
 
 class AllTasks(graphene.ObjectType):
   all_tasks = graphene.List(BaseTaskType)
