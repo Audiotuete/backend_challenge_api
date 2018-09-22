@@ -5,9 +5,9 @@ import datetime
 from app_project_tasks.models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
 
 # Types
-from backend_challenge_api.users.graphql.schema import UserType
-from app_tasks.graphql.task_schema import TaskMultipleType
-from app_projects.graphql.schema import ProjectType
+from backend_challenge_api.users.graphql.__types import UserType
+from app_tasks.graphql.__types import TaskMultipleType
+from app_projects.graphql.__types import ProjectType
 
 class UpdateProjectTaskMultipleMutation(graphene.Mutation):
   # project = graphene.Field(UserType)

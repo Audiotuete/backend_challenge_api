@@ -7,7 +7,7 @@ from backend_challenge_api.users.forms import UserChangeForm, UserCreationForm
 User = get_user_model()
 
 CUSTOM_USER_FIELDS = (
-    (None, {'fields': ('reg_code', 'push_notifications',)}),
+    (None, {'fields': ('currentChallenge', 'currentProject')}),
 )
 
 @admin.register(User)
@@ -15,6 +15,6 @@ class UserAdmin(auth_admin.UserAdmin):
 
     form = UserChangeForm
     add_form = UserCreationForm
-    fieldsets = (("User", {"fields": ("name",)}),) + auth_admin.UserAdmin.fieldsets
+    fieldsets = (("User", {"fields": ("name",)}),) + CUSTOM_USER_FIELDS + auth_admin.UserAdmin.fieldsets
     list_display = ["username", "name", "is_superuser"]
     search_fields = ["name"]

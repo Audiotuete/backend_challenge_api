@@ -1,13 +1,14 @@
 import graphene
 import graphql_jwt
 
-from app_tasks.graphql.task_schema import AllTasks, TaskMultipleType, TaskOpenType, TaskYesOrNoType
+from app_tasks.graphql.__types import TaskMultipleType, TaskOpenType, TaskYesOrNoType
+# from app_tasks.graphql.allTasks import AllTasks
 
-from backend_challenge_api.users.graphql.schema import AllUsers
-from backend_challenge_api.users.graphql.schema import Mutation as UserMutation
+from backend_challenge_api.users.graphql.allUsers import AllUsers
+from backend_challenge_api.users.graphql.createUser import CreateUser
 
-from app_projects.graphql.schema import AllProjects
-from app_projects.graphql.schema import Mutation as ProjectMutation
+from app_projects.graphql.allProjects import AllProjects
+from app_projects.graphql.createProject import CreateProject
 
 # from app_project_tasks.graphql import AllProjectTasks
 from app_project_tasks.graphql.allProjectTasks import AllProjectTasks
@@ -15,8 +16,8 @@ from app_project_tasks.graphql.updateProjectTask__ import UpdateProjectTaskMulti
 
 
 class Queries(
-  AllUsers,
   # AllTasks,
+  AllUsers,
   AllProjects,
   AllProjectTasks,
 # -----------------------
@@ -25,9 +26,9 @@ class Queries(
   pass
 
 class Mutations(
-  UserMutation,
+  CreateUser,
+  CreateProject,
   UpdateProjectTaskMultiple,
-  ProjectMutation,
 # -----------------------
   graphene.ObjectType
 ):

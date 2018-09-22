@@ -18,7 +18,7 @@ class Project(models.Model):
   # around the globe.
 
   challenge = models.ForeignKey('app_challenges.Challenge', default=1, on_delete=models.PROTECT)
-  project_creator = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, on_delete=models.PROTECT)
+  project_creator = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
   project_name = models.CharField(("Projekt-Titel"), blank=True, max_length=140)
   project_description = models.TextField(("Projektbeschreibung"), blank=True, max_length=255)
 

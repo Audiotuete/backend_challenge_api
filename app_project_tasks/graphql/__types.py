@@ -1,9 +1,9 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from backend_challenge_api.users.graphql.schema import UserType
-from app_projects.graphql.schema import ProjectType
-from app_tasks.graphql.task_schema import TaskMultipleType, TaskOpenType, TaskYesOrNoType
+from backend_challenge_api.users.graphql.__types import UserType
+from app_projects.graphql.__types import ProjectType
+from app_tasks.graphql.__types import TaskMultipleType, TaskOpenType, TaskYesOrNoType
 from app_project_tasks.models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
 
 

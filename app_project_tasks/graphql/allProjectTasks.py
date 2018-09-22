@@ -5,7 +5,7 @@ from itertools import chain
 from app_project_tasks.models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
 
 # Types
-from app_project_tasks.graphql.__types import BaseProjectTaskType
+from .__types import BaseProjectTaskType
 
 class AllProjectTasks(graphene.ObjectType):
   all_project_tasks = graphene.List(BaseProjectTaskType, projectid = graphene.ID())
