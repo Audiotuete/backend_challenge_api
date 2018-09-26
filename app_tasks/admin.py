@@ -1,7 +1,7 @@
 from django.contrib import admin
 from ordered_model.admin import OrderedModelAdmin
 
-from .models import TaskOpen, TaskYesOrNo, TaskMultiple, Task
+from app_tasks.models import Task, TaskOpen, TaskYesOrNo, TaskMultiple, TaskProblem, TaskIdea, TaskAction
 
 class TaskAdmin(OrderedModelAdmin):
   model = Task
@@ -23,6 +23,9 @@ class TaskAdmin(OrderedModelAdmin):
         return []
 
 admin.site.register(Task, TaskAdmin)
-admin.site.register(TaskOpen)
-admin.site.register(TaskYesOrNo)
-admin.site.register(TaskMultiple)
+# admin.site.register(TaskOpen)
+# admin.site.register(TaskYesOrNo)
+# admin.site.register(TaskMultiple)
+admin.site.register(TaskProblem)
+admin.site.register(TaskIdea)
+admin.site.register(TaskAction)

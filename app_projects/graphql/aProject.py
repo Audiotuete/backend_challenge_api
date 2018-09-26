@@ -1,5 +1,3 @@
-from django.apps import apps as django_apps
-
 import graphene
 from graphql_jwt.decorators import login_required
 

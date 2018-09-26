@@ -2,7 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 
 #Models
-from ..models import TaskMultiple, TaskOpen, TaskYesOrNo
+from ..models import TaskMultiple, TaskOpen, TaskYesOrNo, TaskProblem, TaskIdea, TaskAction
 
 
 class BaseTaskType(graphene.Interface):
@@ -24,4 +24,19 @@ class TaskOpenType(DjangoObjectType):
 class TaskYesOrNoType(DjangoObjectType):
   class Meta:
     model = TaskYesOrNo
+    interfaces = [ BaseTaskType ]
+
+class TaskProblemType(DjangoObjectType):
+  class Meta:
+    model = TaskProblem
+    interfaces = [ BaseTaskType ]
+
+class TaskIdeaType(DjangoObjectType):
+  class Meta:
+    model = TaskIdea
+    interfaces = [ BaseTaskType ]
+
+class TaskActionType(DjangoObjectType):
+  class Meta:
+    model = TaskAction
     interfaces = [ BaseTaskType ]

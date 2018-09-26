@@ -13,18 +13,20 @@ class CreateUserMutation(graphene.Mutation):
 
   class Arguments:
     username = graphene.String(required=True)
-    # email = graphene.String(required=True)
+    email = graphene.String(required=True)
     password = graphene.String(required=True)
     challengeCode = graphene.String(required=True)
 
-  def mutate(self, info, username, password, challengeCode):
+  def mutate(self, info, username, email, password, challengeCode):
+
+    # valitdate Data username, email, password
 
     Challenge = django_apps.get_model('app_challenges', 'Challenge')
     match_challenge = Challenge.objects.get(challenge_code = challengeCode) 
 
     user = User(
       username = username,
-      # email = email
+      email = email,
       currentChallenge = match_challenge
     )
     user.set_password(password)

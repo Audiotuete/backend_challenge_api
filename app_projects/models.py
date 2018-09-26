@@ -1,11 +1,7 @@
+from django.apps import apps as django_apps
 from django.db import models
 from django.conf import settings
 from django.utils.crypto import get_random_string
-
-from app_tasks.models import TaskOpen, TaskYesOrNo, TaskMultiple
-from app_project_tasks.models import ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskMultiple
-
-
 
 class Project(models.Model):
 
@@ -13,62 +9,53 @@ class Project(models.Model):
     indexes = [
         models.Index(fields=['project_code',]),
     ]
-
-  # First Name and Last Name do not cover name patterns
-  # around the globe.
-
   challenge = models.ForeignKey('app_challenges.Challenge', default=1, on_delete=models.PROTECT)
   project_creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True )
   project_name = models.CharField(("Projekt-Titel"), max_length=140, unique=True)
   project_description = models.TextField(("Projektbeschreibung"), max_length=255)
 
-  # COMMENT OUT AT NEW DEPLOY (then migrate without creating migrations afterwards uncomment and makemigrations)
   push_notifications = models.BooleanField(("Push notfications"), default=True)
   project_code = models.CharField(("Project Code"),max_length=7, blank=True, unique=True)
-
-
-  # COMMENT OUT AT NEW DEPLOY
   
   def __str__(self):
     return self.project_name
 
-  # COMMENT OUT AT NEW DEPLOY
   def save(self, *args, **kwargs):
-    # If Task doesn't already exist create an (empty) ProjectTask entry for each Project in the database upfront.
+    # If Task doesn't already exist create an (empty) ProjectTask for each Project in the database upfront.
     if self.pk is None:
 
+    # Create Project with unique project code
       generated_code = get_random_string(length=7).lower()
 
+      # Check if generated_code already exist in the DB and regenerate if true
       while Project.objects.filter(project_code = generated_code):
         generated_code = get_random_string(length=7).lower()
 
       self.project_code = generated_code
-
       super(Project, self).save(*args, **kwargs)
-      
-      open_tasks = TaskOpen.objects.all()
-      multiple_choice_tasks = TaskMultiple.objects.all()
-      yes_or_no_tasks = TaskYesOrNo.objects.all()
 
-      project_task_list = []
- 
-      for new_task in open_tasks:
-        project_task_list.append(ProjectTaskOpen(project = self, task = new_task))
-      ProjectTaskOpen.objects.bulk_create(project_task_list)
+    # Create new ProjectTasks for every Task 
 
-      project_task_list = []
- 
-      for new_task in multiple_choice_tasks:
-        project_task_list.append(ProjectTaskMultiple(project = self, task = new_task))
-      ProjectTaskMultiple.objects.bulk_create(project_task_list)
-      
-      project_task_list = []  
+      all_models = {
+        'TaskProblem': 'ProjectTaskProblem',
+        'TaskIdea': 'ProjectTaskIdea',
+        'TaskAction': 'ProjectTaskAction',
+        # 'TaskOpen': 'ProjectTaskOpen',
+        # 'TaskYesOrNo': 'ProjectTaskYesOrNo',
+        # 'TaskMultiple': 'ProjectTaskMultiple',
+      }
 
-      for new_task in yes_or_no_tasks:
-        project_task_list.append(ProjectTaskYesOrNo(project = self, task = new_task))
-      
-      ProjectTaskYesOrNo.objects.bulk_create(project_task_list)
-      project_task_list = []  
+      for key_model, value_model in all_models.items(): 
+    
+        tasks_model = django_apps.get_model('app_tasks', key_model)
+        project_task_model = django_apps.get_model('app_project_tasks', value_model)
+
+        tasks = tasks_model.objects.all()
+        project_task_list = []
+
+        for task in tasks:
+          project_task_list.append(project_task_model(project = self, task = task))
+        project_task_model.objects.bulk_create(project_task_list)
 
     # End
     else:

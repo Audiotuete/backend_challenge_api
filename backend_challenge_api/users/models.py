@@ -10,8 +10,8 @@ class User(AbstractUser):
   # First Name and Last Name do not cover name patterns
   # around the globe.
   name = models.CharField(_("Name of User"), blank=True, max_length=255)
-  currentChallenge = models.ForeignKey('app_challenges.Challenge', on_delete=models.PROTECT)
-  currentProject = models.ForeignKey('app_projects.Project', on_delete=models.PROTECT, null=True, blank=True)
+  currentChallenge = models.ForeignKey('app_challenges.Challenge', on_delete=models.SET_NULL, null=True, blank=True)
+  currentProject = models.ForeignKey('app_projects.Project', on_delete=models.SET_NULL, null=True, blank=True)
 
 
   def get_absolute_url(self):

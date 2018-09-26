@@ -9,21 +9,24 @@ from backend_challenge_api.users.graphql.createUser import CreateUser
 
 from app_challenges.graphql.aChallenge import AChallenge
 
-from app_projects.graphql.aProject import AProject
-from app_projects.graphql.allProjects import AllProjects
+# from app_projects.graphql.aProject import AProject
+# from app_projects.graphql.allProjects import AllProjects
 from app_projects.graphql.joinProject import JoinProject
 from app_projects.graphql.createProject import CreateProject
 
 from app_project_tasks.graphql.allProjectTasks import AllProjectTasks
-from app_project_tasks.graphql.updateProjectTask__ import UpdateProjectTaskMultiple
+
+from app_project_tasks.graphql.updateProjectTaskProblem import UpdateProjectTaskProblem
+from app_project_tasks.graphql.updateProjectTaskIdea import UpdateProjectTaskIdea
+from app_project_tasks.graphql.updateProjectTaskAction import UpdateProjectTaskAction
 
 
 class Queries(
   CurrentUser,
   AChallenge,
-  AProject,
+  # AProject,
   # AllUsers,
-  AllProjects,
+  # AllProjects,
   AllProjectTasks,
   # AllTasks,
 
@@ -36,7 +39,9 @@ class Mutations(
   CreateUser,
   CreateProject,
   JoinProject,
-  UpdateProjectTaskMultiple,
+  UpdateProjectTaskProblem,
+  UpdateProjectTaskIdea,
+  UpdateProjectTaskAction,
 # -----------------------
   graphene.ObjectType
 ):

@@ -4,10 +4,10 @@ from graphene_django import DjangoObjectType
 #Types
 from backend_challenge_api.users.graphql.__types import UserType
 from app_projects.graphql.__types import ProjectType
-from app_tasks.graphql.__types import TaskMultipleType, TaskOpenType, TaskYesOrNoType
+from app_tasks.graphql.__types import TaskMultipleType, TaskOpenType, TaskYesOrNoType, TaskProblemType, TaskIdeaType, TaskActionType
 
 #Models
-from ..models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo
+from ..models import ProjectTaskMultiple, ProjectTaskOpen, ProjectTaskYesOrNo, ProjectTaskProblem, ProjectTaskIdea, ProjectTaskAction
 
 
 
@@ -35,4 +35,22 @@ class ProjectTaskYesOrNoType(DjangoObjectType):
   task = graphene.Field(TaskYesOrNoType)
   class Meta:
     model = ProjectTaskYesOrNo
+    interfaces = [ BaseProjectTaskType ]
+
+class ProjectTaskProblemType(DjangoObjectType):
+  task = graphene.Field(TaskProblemType)
+  class Meta:
+    model = ProjectTaskProblem
+    interfaces = [ BaseProjectTaskType ]
+
+class ProjectTaskIdeaType(DjangoObjectType):
+  task = graphene.Field(TaskIdeaType)
+  class Meta:
+    model = ProjectTaskIdea
+    interfaces = [ BaseProjectTaskType ]
+
+class ProjectTaskActionType(DjangoObjectType):
+  task = graphene.Field(TaskActionType)
+  class Meta:
+    model = ProjectTaskAction
     interfaces = [ BaseProjectTaskType ]
