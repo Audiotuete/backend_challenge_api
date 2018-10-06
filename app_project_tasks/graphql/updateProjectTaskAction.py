@@ -44,21 +44,22 @@ class UpdateProjectTaskActionMutation(graphene.Mutation):
     if not open_task:
       raise Exception('Invalid Link!')
 
-    open_task.status = status
-    # open_task.description = description
+    open_task.count_touched += 1
+    open_task.submitted_by = current_user
+
     open_task.action_1 = action1
     open_task.action_2 = action2
     open_task.action_3 = action3
-    open_task.submitted_by = current_user
 
-
-
-    if action1 != "" and action2 != "" and action3 != "":
+    if action1 and action2 and action3:
       open_task.status = True
+    else:
+      open_task.status = False      
     
     if open_task.first_touched == None:
       open_task.first_touched = datetime.datetime.now()
-    open_task.count_touched += 1
+  
+
     open_task.save()
 
     return UpdateProjectTaskActionMutation(

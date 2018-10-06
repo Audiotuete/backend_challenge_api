@@ -23,7 +23,7 @@ class Task(OrderedModel):
     if self.pk is None:
       super(Task, self).save(*args, **kwargs)
             
-      all_models = {
+      models_dict = {
         'TaskProblem': 'ProjectTaskProblem',
         'TaskIdea': 'ProjectTaskIdea',
         'TaskAction': 'ProjectTaskAction',
@@ -33,7 +33,7 @@ class Task(OrderedModel):
       }
 
       task_model_name = self.__class__.__name__
-      project_task_model = django_apps.get_model('app_project_tasks', model_dict[task_model_name])
+      project_task_model = django_apps.get_model('app_project_tasks', models_dict[task_model_name])
 
       all_projects = Project.objects.all()
 

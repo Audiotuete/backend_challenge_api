@@ -44,12 +44,16 @@ class UpdateProjectTaskIdeaMutation(graphene.Mutation):
     if not open_task:
       raise Exception('Invalid Link!')
 
-    open_task.status = status
-    # open_task.description = description
+    open_task.submitted_by = current_user
+
     open_task.hashtag_1 = hashtag1
     open_task.hashtag_2 = hashtag2
     open_task.hashtag_3 = hashtag3
-    open_task.submitted_by = current_user
+
+    if hashtag1 and hashtag2 and hashtag3:
+      open_task.status = True
+    else:
+      open_task.status = False   
     
     if open_task.first_touched == None:
       open_task.first_touched = datetime.datetime.now()

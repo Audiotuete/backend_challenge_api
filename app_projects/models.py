@@ -36,7 +36,7 @@ class Project(models.Model):
 
     # Create new ProjectTasks for every Task 
 
-      all_models = {
+      models_dict = {
         'TaskProblem': 'ProjectTaskProblem',
         'TaskIdea': 'ProjectTaskIdea',
         'TaskAction': 'ProjectTaskAction',
@@ -45,7 +45,7 @@ class Project(models.Model):
         # 'TaskMultiple': 'ProjectTaskMultiple',
       }
 
-      for key_model, value_model in all_models.items(): 
+      for key_model, value_model in models_dict.items(): 
     
         tasks_model = django_apps.get_model('app_tasks', key_model)
         project_task_model = django_apps.get_model('app_project_tasks', value_model)

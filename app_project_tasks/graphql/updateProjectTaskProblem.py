@@ -27,12 +27,10 @@ class UpdateProjectTaskProblemMutation(graphene.Mutation):
   
   class Arguments:
     task_id = graphene.ID(required=True)
-    status = graphene.Boolean()
-    # description = graphene.String()
     keywords = graphene.String()
 
   @login_required
-  def mutate(self, info, task_id, status, keywords=""):
+  def mutate(self, info, task_id, keywords=""):
     current_user = info.context.user
     project_id = current_user.currentProject.id
     
@@ -40,15 +38,19 @@ class UpdateProjectTaskProblemMutation(graphene.Mutation):
     if not open_task:
       raise Exception('Invalid Link!')
 
-    open_task.status = status
-    # open_task.description = description
     open_task.keywords = keywords
 
+    if keywords:
+      open_task.status = True
+    else:
+      open_task.status = False
+
+    open_task.count_touched += 1
     open_task.submitted_by = current_user
-    
+
     if open_task.first_touched == None:
       open_task.first_touched = datetime.datetime.now()
-    open_task.count_touched += 1
+
     open_task.save()
 
     return UpdateProjectTaskProblemMutation(

@@ -5,7 +5,7 @@ from .models import Challenge
 
 class ChallengeAdmin(admin.ModelAdmin):
   model = Challenge
-  # readonly_fields = ['challenge_code',]
+  readonly_fields = ['challenge_code',]
   actions = None
 
   # def has_add_permission(self, request):
