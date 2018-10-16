@@ -21,9 +21,11 @@ class CreateUserMutation(graphene.Mutation):
 
   def mutate(self, info, username, email, password, challengeCode):
     username_lowercase = username.lower()
-    
+
     if len(username) < 3:
       raise Exception('Username must have at least 3 characters!')
+    if not re.match(r'(^[a-zA-Z0-9_-]+$)', username_lowercase):
+      raise Exception('Username must contain only alphanumerics characters, underscores and dashes')
     if not re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', email):
       raise Exception('Email must be a vaild E-Mail-Adress!')
     if len(password) < 8:
@@ -31,7 +33,6 @@ class CreateUserMutation(graphene.Mutation):
     if User.objects.filter(username = username_lowercase):
       raise Exception('Username already exists!')
     
-
     Challenge = django_apps.get_model('app_challenges', 'Challenge')
     match_challenge = Challenge.objects.get(challenge_code = challengeCode) 
 

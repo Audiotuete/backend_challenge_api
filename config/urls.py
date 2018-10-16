@@ -10,31 +10,31 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 urlpatterns = [
-    # path("", 
-    #     TemplateView.as_view(template_name="pages/app.html"), 
-    #     name="app"),
     path("", 
-        TemplateView.as_view(template_name="pages/home.html"), 
-        name="home"),
-    path(
-        "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
-        name="about",
-    ),
+        TemplateView.as_view(template_name="pages/default.html"), 
+        name="default"),
+    # path("", 
+    #     TemplateView.as_view(template_name="pages/home.html"), 
+    #     name="home"),
+    # path(
+    #     "about/",
+    #     TemplateView.as_view(template_name="pages/about.html"),
+    #     name="about",
+    # ),
 
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     
-    path(
-        "users/",
-        include("backend_challenge_api.users.urls", namespace="users"),
-    ),
-    path("accounts/", include("allauth.urls")),
+    # path(
+    #     "users/",
+    #     include("backend_challenge_api.users.urls", namespace="users"),
+    # ),
+    # path("accounts/", include("allauth.urls")),
    
     # Your stuff: custom urls includes go here
     # path('graphql/', GraphQLView.as_view(graphiql=True)),
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=False))),
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

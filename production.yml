@@ -30,14 +30,14 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
-  pgadmin:
-    image: dpage/pgadmin4
-    env_file:
-      - ./.envs/.local/.pgadmin
-    ports:
-      - "8181:80"
-    links:
-      - postgres
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   env_file:
+  #     - ./.envs/.production/.pgadmin
+  #   ports:
+  #     - "8181:80"
+  #   links:
+  #     - postgres
 
   caddy:
     build:
