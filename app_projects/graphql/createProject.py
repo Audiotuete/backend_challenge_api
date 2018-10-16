@@ -19,6 +19,9 @@ class CreateProjectMutation(graphene.Mutation):
 
   @login_required
   def mutate(self, info, projectName, projectDescription):
+    if len(projectName) < 5 \
+    or len(projectDescription) < 10:
+      raise Exception('Projectname and description required!')
     
     currentUser = info.context.user
 

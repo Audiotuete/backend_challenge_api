@@ -5,6 +5,8 @@ from .models import Project
 class ProjectAdmin(admin.ModelAdmin):
   model = Project
   readonly_fields = ['project_code',]
+  list_display = [ 'project_name', 'project_creator', 'project_code', ]
+
   # actions = None
 
   # def has_add_permission(self, request):
