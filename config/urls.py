@@ -34,7 +34,7 @@ urlpatterns = [
    
     # Your stuff: custom urls includes go here
     # path('graphql/', GraphQLView.as_view(graphiql=True)),
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=False))),
+    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

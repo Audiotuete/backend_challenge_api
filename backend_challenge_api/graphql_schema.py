@@ -8,6 +8,8 @@ from backend_challenge_api.users.graphql.currentUser import CurrentUser
 from backend_challenge_api.users.graphql.createUser import CreateUser
 
 from app_challenges.graphql.aChallenge import AChallenge
+from app_challenges.graphql.checkChallenge import CheckChallenge
+
 
 # from app_projects.graphql.aProject import AProject
 # from app_projects.graphql.allProjects import AllProjects
@@ -24,6 +26,7 @@ from app_project_tasks.graphql.updateProjectTaskAction import UpdateProjectTaskA
 class Queries(
   CurrentUser,
   AChallenge,
+  CheckChallenge,
   # AProject,
   # AllUsers,
   # AllProjects,
