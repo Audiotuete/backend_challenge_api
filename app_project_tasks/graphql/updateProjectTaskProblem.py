@@ -34,7 +34,7 @@ class UpdateProjectTaskProblemMutation(graphene.Mutation):
     current_user = info.context.user
     project_id = current_user.currentProject.id
     
-    open_task = ProjectTaskProblem.objects.get(task_id=task_id, project_id=project_id)
+    open_task = ProjectTaskProblem.objects.filter(task_id=task_id, project_id=project_id).first()
     if not open_task:
       raise Exception('Invalid Link!')
 

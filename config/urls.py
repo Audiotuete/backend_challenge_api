@@ -11,8 +11,8 @@ from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path("", 
-        TemplateView.as_view(template_name="pages/default.html"), 
-        name="default"),
+        TemplateView.as_view(template_name="pages/home.html"), 
+        name="home"),
     # path("", 
     #     TemplateView.as_view(template_name="pages/home.html"), 
     #     name="home"),

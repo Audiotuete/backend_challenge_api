@@ -25,7 +25,7 @@ class JoinProjectMutation(graphene.Mutation):
     theUser = info.context.user
     theChallenge = info.context.user.currentChallenge
 
-    project_to_join = Project.objects.get(project_code = projectCode, challenge = theChallenge)
+    project_to_join = Project.objects.filter(project_code = projectCode, challenge = theChallenge).first()
 
     #Connect user to project
     theUser = info.context.user

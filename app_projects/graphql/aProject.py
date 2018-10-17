@@ -15,6 +15,6 @@ class AProject(graphene.ObjectType):
   @login_required
   def resolve_a_project(self, info, projectCode, **kwargs):
     
-    match_project = Project.objects.get(project_code = projectCode)
+    match_project = Project.objects.filter(project_code = projectCode).first()
 
     return match_project

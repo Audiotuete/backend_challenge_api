@@ -14,6 +14,6 @@ class AChallenge(graphene.ObjectType):
 
   def resolve_a_challenge(self, info, challengeCode, **kwargs):
     
-    match_challenge = Challenge.objects.get(challenge_code = challengeCode)
+    match_challenge = Challenge.objects.filter(challenge_code = challengeCode).first()
 
     return match_challenge

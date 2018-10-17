@@ -34,7 +34,7 @@ class CreateUserMutation(graphene.Mutation):
       raise Exception('Username already exists!')
     
     Challenge = django_apps.get_model('app_challenges', 'Challenge')
-    match_challenge = Challenge.objects.get(challenge_code = challengeCode) 
+    match_challenge = Challenge.objects.filter(challenge_code = challengeCode).first()
 
     user = User(
       username = username_lowercase,
