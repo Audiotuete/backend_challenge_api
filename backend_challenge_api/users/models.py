@@ -4,8 +4,6 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 
-
-
 class User(AbstractUser):
 
   # First Name and Last Name do not cover name patterns
@@ -13,7 +11,8 @@ class User(AbstractUser):
   name = models.CharField(_("Name of User"), blank=True, max_length=255)
   currentChallenge = models.ForeignKey('app_challenges.Challenge', on_delete=models.SET_NULL, null=True, blank=True)
   currentProject = models.ForeignKey('app_projects.Project', on_delete=models.SET_NULL, null=True, blank=True)
-
+  phone = models.CharField(("Telefon-Nummer"), null=True, blank=True, max_length=16)
+  is_challenge_contact =  models.BooleanField(("Challenge Ansprechpartner_in"), default=False)
 
   def get_absolute_url(self):
     return reverse("users:detail", kwargs={"username": self.username})

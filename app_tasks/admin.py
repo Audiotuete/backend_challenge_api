@@ -7,6 +7,8 @@ class TaskAdmin(OrderedModelAdmin):
   model = Task
   list_display = ('task_text', 'move_up_down_links')
 
+  # search_fields = ('task_text', 'order',)
+
   def has_add_permission(self, request):
     return False
   # def has_change_permission(self, request, obj=None):

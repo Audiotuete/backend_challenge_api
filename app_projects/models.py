@@ -47,13 +47,17 @@ class Project(models.Model):
 
       for key_model, value_model in models_dict.items(): 
     
+        # challenge_model = django_apps.get_model('app_challenges', 'Challenge')
+
         tasks_model = django_apps.get_model('app_tasks', key_model)
         project_task_model = django_apps.get_model('app_project_tasks', value_model)
 
+        # challenge_tasks = challenge_model.objects.filter(id = self.challenge.id).first().tasks.all().filter()
+        # print(challenge_tasks)
         tasks = tasks_model.objects.all()
-        project_task_list = []
 
-        for task in tasks:
+        project_task_list = []
+        for task in challenge_tasks:
           project_task_list.append(project_task_model(project = self, task = task))
         project_task_model.objects.bulk_create(project_task_list)
 

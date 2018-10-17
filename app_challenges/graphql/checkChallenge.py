@@ -13,6 +13,6 @@ class CheckChallenge(graphene.ObjectType):
 
   def resolve_check_challenge(self, info, challengeCode, **kwargs):
     
-    match_challenge = Challenge.objects.filter(challenge_code = challengeCode).first()
+    match_check_challenge = Challenge.objects.filter(challenge_code = challengeCode).first()
 
-    return match_challenge
+    return match_check_challenge

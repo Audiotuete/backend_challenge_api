@@ -4,15 +4,15 @@ from django.contrib.postgres.fields import ArrayField
 from ordered_model.models import OrderedModel
 
 class Task(OrderedModel):
+
+  class Meta:
+    ordering = ('order',)
+  order_class_path = __module__ + '.Task'
+
   task_text = models.TextField(max_length=250)
   task_videolink = models.CharField(max_length=150, null=True, blank=True)
   task_imagelink = models.CharField(max_length=150, null=True, blank=True)
   pub_date = models.DateTimeField(auto_now_add=True)
-
-  order_class_path = __module__ + '.Task'
-
-  class Meta:
-    ordering = ('order',)
 
   def __str__(self):
     return self.task_text
